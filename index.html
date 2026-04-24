@@ -3,163 +3,315 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khương Duy | Tiền Lưu Niệm Tổ 2 - Hệ Thống Đơn Hàng Tự Động</title>
+    <title>Khương Duy | Tiền Lưu Niệm Tổ 2</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Be Vietnam Pro', sans-serif; background-color: #05070a; color: white; scroll-behavior: smooth; }
-        .gold-glow { text-shadow: 0 0 20px rgba(255, 215, 0, 0.4); }
-        .card-glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .promo-card { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); }
-        .bundle-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
-        @keyframes bounce-slow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        .animate-bounce-slow { animation: bounce-slow 3s infinite; }
+        body { 
+            font-family: 'Be Vietnam Pro', sans-serif; 
+            background: linear-gradient(135deg, #0b0f1a 0%, #1a1f3a 100%);
+            color: white; 
+            scroll-behavior: smooth;
+        }
+        .gold-glow { text-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
+        .card-glass { 
+            background: rgba(255, 255, 255, 0.05); 
+            backdrop-filter: blur(12px); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            transition: all 0.3s ease;
+        }
+        .card-glass:hover { 
+            background: rgba(255, 255, 255, 0.08); 
+            transform: translateY(-5px);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+        .promo-gradient { background: linear-gradient(135deg, #ff416c, #ff4b2b); }
+        @keyframes pulse-red { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+        .animate-pulse-red { animation: pulse-red 2s infinite; }
+        input, textarea, select { color: white !important; }
+        input::placeholder, textarea::placeholder { color: rgba(255, 255, 255, 0.4) !important; }
+        select option { background: #1f2937; color: white; }
     </style>
 </head>
-<body class="p-4 md:p-8">
+<body>
 
-    <div class="max-w-6xl mx-auto promo-card p-4 rounded-2xl mb-12 text-center shadow-2xl animate-pulse">
-        <p class="text-lg font-black uppercase italic tracking-widest">
-            🚀 ĐẶC BIỆT: ĐƠN HÀNG TRÊN <span class="text-yellow-300 text-2xl">100.000đ</span> 
-            TẶNG NGAY <span class="underline">ULTRA BUNDLE</span> TRỊ GIÁ 99K! 🚀
+    <!-- PROMO BANNER -->
+    <div class="promo-gradient text-white p-4 sticky top-0 z-50 text-center shadow-2xl animate-pulse-red">
+        <p class="text-sm md:text-base font-black uppercase tracking-tighter">
+            🎉 30/04 - 01/05: GIẢM <span class="text-yellow-300">20.000đ</span> | ĐƠN ≥100K TẶNG <span class="underline">ULTRA BUNDLE 99K</span> 🚀
         </p>
     </div>
 
-    <header class="text-center mb-20">
-        <h1 class="text-7xl md:text-9xl font-black mb-4 tracking-tighter italic gold-glow text-yellow-500">DUY TỔ 2</h1>
-        <p class="text-gray-400 text-xl font-bold uppercase tracking-widest">Hệ Thống In Ấn Custom Siêu Cấp</p>
-    </header>
+    <div class="max-w-6xl mx-auto px-4 py-12">
 
-    <section class="max-w-7xl mx-auto mb-24">
-        <h2 class="text-3xl font-black mb-12 text-center uppercase italic border-b-4 border-yellow-500 inline-block">Danh Mục 30 Bundle Bán Chạy</h2>
-        
-        <div class="bundle-grid">
-            <div class="card-glass p-6 rounded-3xl border-t-4 border-red-500">
-                <h3 class="font-black text-xl mb-4 text-red-500 uppercase">Hệ Chính Trị (6)</h3>
-                <ul class="text-sm space-y-2 text-gray-300">
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Bundle Putin Full')">1. Bundle Putin (6 tờ) - 45k</li>
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Bundle Trump Full')">2. Bundle Trump (6 tờ) - 45k</li>
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Bundle Biden Full')">3. Bundle Biden (6 tờ) - 45k</li>
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Bundle Kim Jong Un')">4. Bundle Boss Kim (6 tờ) - 45k</li>
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Bundle Tập Cận Bình')">5. Bundle Tập (6 tờ) - 45k</li>
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Combo 4 Tổng Thống')">6. Combo 4 Tổng Thống - 35k</li>
-                </ul>
+        <!-- HEADER -->
+        <header class="text-center mb-16">
+            <div class="inline-block px-6 py-2 rounded-full border border-yellow-500/50 text-yellow-500 text-xs font-bold mb-6 uppercase tracking-widest">
+                ★ Khuong Duy Official - Tổ 2 ★
             </div>
+            <h1 class="text-6xl md:text-8xl font-black mb-4 tracking-tighter italic gold-glow">
+                IN TIỀN <span class="text-yellow-400">CUSTOM</span>
+            </h1>
+            <p class="text-gray-300 text-lg max-w-2xl mx-auto font-medium mb-8">
+                Sắc nét • Rực rỡ • Giao tận bàn tại <span class="text-yellow-400 font-bold">Tổ 2</span>
+                <br><span class="text-gray-400">Bạn thích ai, Duy in người đó! 😎</span>
+            </p>
+        </header>
 
-            <div class="card-glass p-6 rounded-3xl border-t-4 border-blue-500">
-                <h3 class="font-black text-xl mb-4 text-blue-500 uppercase">Hệ Thể Thao (6)</h3>
-                <ul class="text-sm space-y-2 text-gray-300">
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Bundle CR7')">7. Bundle CR7 (6 tờ) - 45k</li>
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Bundle Messi')">8. Bundle Messi (6 tờ) - 45k</li>
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Bundle Mbappe')">9. Bundle Mbappe (6 tờ) - 45k</li>
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Bundle Neymar')">10. Bundle Neymar (6 tờ) - 45k</li>
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Bundle Halland')">11. Bundle Halland (6 tờ) - 45k</li>
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Combo QBV Thế Kỷ')">12. Combo QBV Thế Kỷ - 50k</li>
-                </ul>
+        <!-- PRICING TABLE -->
+        <section class="mb-20">
+            <h2 class="text-4xl font-black mb-10 text-center uppercase italic gold-glow">📋 Bảng Giá Lẻ</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="card-glass p-8 rounded-3xl border-l-4 border-yellow-500">
+                    <h3 class="text-2xl font-black mb-4 text-yellow-400">Normal Print</h3>
+                    <p class="text-gray-400 text-sm mb-4">Trắng đen, giấy dày cứng</p>
+                    <p class="text-4xl font-black text-yellow-500">5.000đ</p>
+                    <p class="text-xs text-gray-500 mt-2">/ 1 tờ</p>
+                </div>
+
+                <div class="card-glass p-8 rounded-3xl border-l-4 border-purple-500">
+                    <h3 class="text-2xl font-black mb-4 text-purple-400">Luxury Color ✨</h3>
+                    <p class="text-gray-400 text-sm mb-4">In màu siêu sắc nét</p>
+                    <p class="text-4xl font-black text-purple-400">10.000đ</p>
+                    <p class="text-xs text-gray-500 mt-2">/ 1 tờ</p>
+                </div>
+
+                <div class="card-glass p-8 rounded-3xl border-l-4 border-blue-500">
+                    <h3 class="text-2xl font-black mb-4 text-blue-400">Digital File</h3>
+                    <p class="text-gray-400 text-sm mb-4">File 4K gửi qua Zalo</p>
+                    <p class="text-4xl font-black text-blue-400">5.000đ</p>
+                    <p class="text-xs text-gray-500 mt-2">/ 1 file</p>
+                </div>
             </div>
+        </section>
 
-            <div class="card-glass p-6 rounded-3xl border-t-4 border-yellow-500">
-                <h3 class="font-black text-xl mb-4 text-yellow-500 uppercase">Hệ Anime (6)</h3>
-                <ul class="text-sm space-y-2 text-gray-300">
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Bundle One Piece')">13. Bundle One Piece - 45k</li>
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Bundle Naruto')">14. Bundle Naruto - 45k</li>
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Bundle Dragon Ball')">15. Bundle Bi Rồng - 45k</li>
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Bundle Demon Slayer')">16. Bundle Diệt Quỷ - 45k</li>
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Bundle Doraemon')">17. Bundle Mèo Máy - 45k</li>
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Combo Wibu Lord')">18. Combo Wibu Lord - 80k</li>
-                </ul>
-            </div>
-
-            <div class="card-glass p-6 rounded-3xl border-t-4 border-pink-500">
-                <h3 class="font-black text-xl mb-4 text-pink-500 uppercase">Hệ K-Pop (6)</h3>
-                <ul class="text-sm space-y-2 text-gray-300">
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Bundle BlackPink')">19. Bundle BlackPink - 50k</li>
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Bundle BTS')">20. Bundle BTS - 50k</li>
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Bundle IVE')">21. Bundle IVE - 45k</li>
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Bundle NewJeans')">22. Bundle NewJeans - 45k</li>
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Bundle G-Dragon')">23. Bundle GD (Vip) - 45k</li>
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Combo Đu Idol')">24. Combo Đu Idol - 85k</li>
-                </ul>
-            </div>
-
-            <div class="card-glass p-6 rounded-3xl border-t-4 border-green-500">
-                <h3 class="font-black text-xl mb-4 text-green-500 uppercase">Độc Lạ & Meme (6)</h3>
-                <ul class="text-sm space-y-2 text-gray-300">
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Bundle Epstein')">25. Bundle Epstein - 45k</li>
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Bundle MrBeast')">26. Bundle MrBeast - 45k</li>
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Bundle Doge Coin')">27. Bundle Doge - 45k</li>
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Bundle Meme Vô Tri')">28. Bundle Vô Tri - 45k</li>
-                    <li class="cursor-pointer hover:text-white" onclick="pick('Bundle Khá Bảnh')">29. Bundle Khá Bảnh - 45k</li>
-                    <li class="cursor-pointer hover:text-white" onclick="pick('ULTRA BUNDLE')">30. ULTRA BUNDLE (VIP) - 99k</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <section id="order-section" class="max-w-3xl mx-auto mb-24">
-        <div class="card-glass p-10 rounded-[3rem] shadow-2xl border-2 border-yellow-500/20 relative">
-            <h2 class="text-4xl font-black mb-8 text-center gold-glow uppercase">ĐẶT HÀNG TẠI ĐÂY</h2>
-            
-            <form action="https://formspree.io/f/xjgjjljw" method="POST" class="space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
-                    <div class="space-y-2">
-                        <label class="text-xs font-bold text-gray-500 uppercase">Tên khách hàng (Bạn tên gì?)</label>
-                        <input type="text" name="customer_name" required placeholder="Ví dụ: Minh Phú" 
-                            class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:border-yellow-500 outline-none">
+        <!-- BUNDLES -->
+        <section class="mb-20">
+            <h2 class="text-4xl font-black mb-10 text-center uppercase italic gold-glow">🎁 Bundle & Combo</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <div class="card-glass p-6 rounded-3xl border-t-4 border-yellow-500">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-black text-xl text-yellow-500">MEGA BUNDLE</h3>
+                        <span class="bg-yellow-500 text-black text-xs font-black px-2 py-1 rounded">HOT</span>
                     </div>
-                    <div class="space-y-2">
-                        <label class="text-xs font-bold text-gray-500 uppercase">Lớp / Tổ</label>
-                        <input type="text" name="location" required placeholder="Ví dụ: Lớp 7A Tổ 3" 
-                            class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:border-yellow-500 outline-none">
+                    <p class="text-gray-300 text-sm mb-4">Full bộ 6 mệnh giá (In màu toàn bộ)</p>
+                    <div class="flex gap-2 mb-6">
+                        <span class="text-2xl font-black text-yellow-400">45.000đ</span>
+                        <span class="text-sm text-gray-500 line-through">60k</span>
+                    </div>
+                    <button onclick="selectBundle('MEGA BUNDLE - 45.000đ')" class="w-full py-3 bg-yellow-500 text-black rounded-xl font-black hover:bg-yellow-400 uppercase text-sm">Chọn</button>
+                </div>
+
+                <div class="card-glass p-6 rounded-3xl border-t-4 border-purple-600">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-black text-xl text-purple-400">ULTRA BUNDLE</h3>
+                        <span class="bg-purple-600 text-white text-xs font-black px-2 py-1 rounded">VIP</span>
+                    </div>
+                    <p class="text-gray-300 text-sm mb-4">Tất cả nhân vật + File Digital + Quà tặng</p>
+                    <div class="flex gap-2 mb-6">
+                        <span class="text-2xl font-black text-purple-400">99.000đ</span>
+                        <span class="text-sm text-gray-500 line-through">150k</span>
+                    </div>
+                    <button onclick="selectBundle('ULTRA BUNDLE - 99.000đ')" class="w-full py-3 bg-purple-600 text-white rounded-xl font-black hover:bg-purple-500 uppercase text-sm">Chọn</button>
+                </div>
+
+                <div class="card-glass p-6 rounded-3xl border-t-4 border-blue-500">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-black text-xl text-blue-400">FRIENDSHIP PACK</h3>
+                        <span class="bg-blue-500 text-white text-xs font-black px-2 py-1 rounded">5+1</span>
+                    </div>
+                    <p class="text-gray-300 text-sm mb-4">Mua 5 tờ tặng 1 miễn phí</p>
+                    <div class="flex gap-2 mb-6">
+                        <span class="text-2xl font-black text-blue-400">Giá lẻ</span>
+                        <span class="text-sm text-green-400 font-bold">-20%</span>
+                    </div>
+                    <button onclick="selectBundle('FRIENDSHIP PACK')" class="w-full py-3 bg-blue-600 text-white rounded-xl font-black hover:bg-blue-500 uppercase text-sm">Chọn</button>
+                </div>
+
+                <div class="card-glass p-6 rounded-3xl border-t-4 border-green-500">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-black text-xl text-green-400">PRESIDENT SET</h3>
+                        <span class="bg-green-500 text-white text-xs font-black px-2 py-1 rounded">LIMITED</span>
+                    </div>
+                    <p class="text-gray-300 text-sm mb-4">4 vị tổng thống quyền lực (In màu)</p>
+                    <div class="flex gap-2 mb-6">
+                        <span class="text-2xl font-black text-green-400">35.000đ</span>
+                        <span class="text-sm text-gray-500 line-through">40k</span>
+                    </div>
+                    <button onclick="selectBundle('PRESIDENT SET - 35.000đ')" class="w-full py-3 bg-green-600 text-white rounded-xl font-black hover:bg-green-500 uppercase text-sm">Chọn</button>
+                </div>
+
+                <div class="card-glass p-6 rounded-3xl border-t-4 border-red-500">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-black text-xl text-red-400">STARTER KIT</h3>
+                        <span class="bg-red-500 text-white text-xs font-black px-2 py-1 rounded">MỚI</span>
+                    </div>
+                    <p class="text-gray-300 text-sm mb-4">3 tờ Normal tùy chọn</p>
+                    <div class="flex gap-2 mb-6">
+                        <span class="text-2xl font-black text-red-400">12.000đ</span>
+                        <span class="text-sm text-gray-500 line-through">15k</span>
+                    </div>
+                    <button onclick="selectBundle('STARTER KIT - 12.000đ')" class="w-full py-3 bg-red-600 text-white rounded-xl font-black hover:bg-red-500 uppercase text-sm">Chọn</button>
+                </div>
+
+                <div class="card-glass p-6 rounded-3xl border-t-4 border-pink-500">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-black text-xl text-pink-400">PREMIUM COLLECTION</h3>
+                        <span class="bg-pink-500 text-white text-xs font-black px-2 py-1 rounded">✨</span>
+                    </div>
+                    <p class="text-gray-300 text-sm mb-4">Mix Normal + Luxury + Digital</p>
+                    <div class="flex gap-2 mb-6">
+                        <span class="text-2xl font-black text-pink-400">120.000đ</span>
+                        <span class="text-sm text-gray-500 line-through">180k</span>
+                    </div>
+                    <button onclick="selectBundle('PREMIUM COLLECTION - 120.000đ')" class="w-full py-3 bg-pink-600 text-white rounded-xl font-black hover:bg-pink-500 uppercase text-sm">Chọn</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SPECIAL OFFERS -->
+        <section class="mb-20">
+            <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-3xl p-10 text-black shadow-2xl">
+                <h2 class="text-3xl font-black mb-6 uppercase">⚡ Ưu Đãi Đặc Biệt Tại Tổ 2</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 font-bold text-sm">
+                    <div class="flex items-center gap-3 bg-black/10 p-4 rounded-xl">
+                        <span class="text-2xl">✨</span> Mua 10 tặng 2 (Normal Print)
+                    </div>
+                    <div class="flex items-center gap-3 bg-black/10 p-4 rounded-xl">
+                        <span class="text-2xl">👥</span> Giảm 10% khi mua nhóm 3+ người
+                    </div>
+                    <div class="flex items-center gap-3 bg-black/10 p-4 rounded-xl">
+                        <span class="text-2xl">🎁</span> Mua ≥50K → Free ép Plastic
+                    </div>
+                    <div class="flex items-center gap-3 bg-black/10 p-4 rounded-xl">
+                        <span class="text-2xl">⭐</span> Tích điểm: 5 tờ = 1 dấu
+                    </div>
+                    <div class="flex items-center gap-3 bg-black/10 p-4 rounded-xl">
+                        <span class="text-2xl">🛡️</span> Bảo hành 1 đổi 1 nếu lỗi
+                    </div>
+                    <div class="flex items-center gap-3 bg-black/10 p-4 rounded-xl">
+                        <span class="text-2xl">🚚</span> Giao tận bàn - Không phí VN
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <div class="space-y-2 text-left">
-                    <label class="text-xs font-bold text-gray-500 uppercase">Nội dung đơn hàng (Idol / Bundle)</label>
-                    <input type="text" id="order_content" name="order_detail" required placeholder="Nhấn vào danh sách trên hoặc tự nhập..." 
-                        class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:border-yellow-500 outline-none">
+        <!-- CALCULATOR -->
+        <section class="mb-20">
+            <h2 class="text-4xl font-black mb-8 text-center uppercase italic gold-glow">🧮 Tính Giá Nhanh</h2>
+            <div class="max-w-2xl mx-auto card-glass p-8 rounded-3xl">
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-sm font-bold text-gray-400 block mb-2">Loại in</label>
+                        <select id="calcType" onchange="calculatePrice()" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-yellow-500 outline-none">
+                            <option value="0">Chọn loại...</option>
+                            <option value="5000">Normal Print (5.000đ)</option>
+                            <option value="10000">Luxury Color (10.000đ)</option>
+                            <option value="5000">Digital File (5.000đ)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-sm font-bold text-gray-400 block mb-2">Số lượng (tờ)</label>
+                        <input type="number" id="calcQuantity" min="1" max="100" value="1" onchange="calculatePrice()" onkeyup="calculatePrice()" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-yellow-500 outline-none">
+                    </div>
+                    <div class="bg-white/10 rounded-xl p-4">
+                        <p class="text-gray-400 text-sm mb-1">💰 TỔNG TIỀN</p>
+                        <p id="calcTotal" class="text-3xl font-black text-yellow-400">0đ</p>
+                    </div>
+                    <button onclick="applyCalculation()" class="w-full py-3 bg-yellow-500 text-black rounded-xl font-bold hover:bg-yellow-400 uppercase">Đưa vào đơn</button>
                 </div>
+            </div>
+        </section>
 
-                <div class="space-y-2 text-left">
-                    <label class="text-xs font-bold text-gray-500 uppercase">Tổng tiền ước tính (VND)</label>
-                    <input type="number" name="total_price" id="total_price" required placeholder="Nhập tổng tiền đơn hàng..." 
-                        class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:border-yellow-500 outline-none text-yellow-500 font-black text-xl">
-                    <p id="gift-alert" class="text-xs text-green-400 font-bold mt-2 hidden">🔥 ĐÃ ĐỦ 100K - BẠN SẼ NHẬN ĐƯỢC ULTRA BUNDLE MIỄN PHÍ!</p>
-                </div>
+        <!-- ORDER FORM -->
+        <section id="order-section" class="mb-20">
+            <h2 class="text-4xl font-black mb-8 text-center uppercase italic gold-glow">📦 Đặt Hàng Ngay</h2>
+            <div class="max-w-3xl mx-auto card-glass p-10 rounded-3xl shadow-2xl">
+                <form id="orderForm" action="https://formspree.io/f/xjgjjljw" method="POST" class="space-y-5">
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="text-xs font-bold text-gray-400 block mb-2 uppercase">Tên của bạn</label>
+                            <input type="text" name="customer_name" required placeholder="Minh Phú" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-yellow-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="text-xs font-bold text-gray-400 block mb-2 uppercase">Lớp / Tổ</label>
+                            <input type="text" name="location" required placeholder="7A Tổ 2" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-yellow-500 outline-none">
+                        </div>
+                    </div>
 
-                <div class="space-y-2 text-left">
-                    <label class="text-xs font-bold text-gray-500 uppercase">Ghi chú thêm</label>
-                    <textarea name="message" rows="2" placeholder="Giao cho mình giờ ra chơi tiết 3 nhé Duy!" 
-                        class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:border-yellow-500 outline-none"></textarea>
-                </div>
+                    <div>
+                        <label class="text-xs font-bold text-gray-400 block mb-2 uppercase">Nội dung đơn hàng (Idol / Bundle)</label>
+                        <input type="text" id="order_content" name="order_detail" required placeholder="Nhấn bundle trên ↑ hoặc tự nhập..." class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-yellow-500 outline-none">
+                    </div>
 
-                <button type="submit" class="w-full bg-yellow-500 text-black font-black py-5 rounded-2xl text-xl shadow-xl hover:bg-yellow-400 transition transform hover:scale-105 uppercase tracking-tighter">
-                    Gửi Đơn Cho Duy 🚀
-                </button>
-            </form>
-        </div>
-    </section>
+                    <div>
+                        <label class="text-xs font-bold text-gray-400 block mb-2 uppercase">Loại in</label>
+                        <select name="print_type" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-yellow-500 outline-none">
+                            <option value="Luxury Color (10k)">Luxury Color (10k)</option>
+                            <option value="Normal Print (5k)">Normal Print (5k)</option>
+                            <option value="Digital File (5k)">Digital File (5k)</option>
+                            <option value="Theo Bundle">Theo Bundle</option>
+                        </select>
+                    </div>
 
-    <footer class="text-center pb-20">
-        <div class="animate-bounce-slow inline-block bg-white text-black px-10 py-3 rounded-full font-black text-xl mb-6">
-            📍 ĐỊA ĐIỂM: BÀN TỔ 2
-        </div>
-        <p class="opacity-30 text-xs uppercase tracking-widest">© 2026 KHUONG DUY - ALL RIGHTS RESERVED</p>
-    </footer>
+                    <div>
+                        <label class="text-xs font-bold text-gray-400 block mb-2 uppercase">Tổng tiền ước tính</label>
+                        <input type="number" name="total_price" id="total_price" required placeholder="Nhập tổng tiền..." class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-yellow-500 outline-none text-yellow-400 font-bold text-lg">
+                        <p id="gift-alert" class="text-xs text-green-400 font-bold mt-2 hidden">🔥 ĐủƠN ≥100K → TẶNG ULTRA BUNDLE!</p>
+                    </div>
+
+                    <div>
+                        <label class="text-xs font-bold text-gray-400 block mb-2 uppercase">Ghi chú thêm</label>
+                        <textarea name="message" rows="2" placeholder="Giao giờ ra chơi tiết 3 nhé Duy!" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-yellow-500 outline-none"></textarea>
+                    </div>
+
+                    <label class="flex items-center gap-3 cursor-pointer">
+                        <input type="checkbox" required class="w-4 h-4">
+                        <span class="text-xs text-gray-400">Tôi đã đọc và đồng ý với điều khoản sử dụng</span>
+                    </label>
+
+                    <button type="submit" class="w-full bg-yellow-500 text-black font-black py-4 rounded-xl text-lg shadow-xl hover:bg-yellow-400 transition uppercase tracking-tighter">
+                        🚀 Gửi Đơn Cho Duy
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="text-center pb-10">
+            <div class="bg-white text-black px-8 py-4 rounded-full font-black text-xl mb-6 inline-block">
+                📍 ĐỊA ĐIỂM: BÀN TỔ 2
+            </div>
+            <p class="text-gray-500 text-xs uppercase tracking-widest">© 2026 KHUONG DUY - ALL RIGHTS RESERVED</p>
+            <p class="text-gray-600 text-xs mt-2">Sản phẩm chỉ có giá trị giải trí & sưu tầm • Cấm dùng đóng tiền học</p>
+        </footer>
+
+    </div>
 
     <script>
-        // Hàm chọn nhanh bundle
-        function pick(name) {
+        function selectBundle(name) {
             document.getElementById('order_content').value = name;
-            document.getElementById('order-section').scrollIntoView();
-            // Hiệu ứng nháy nhẹ để khách biết đã chọn
-            document.getElementById('order_content').classList.add('border-yellow-500');
-            setTimeout(() => document.getElementById('order_content').classList.remove('border-yellow-500'), 1000);
+            document.getElementById('order-section').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('order_content').focus();
         }
 
-        // Tự động kiểm tra quà tặng 100k
+        function calculatePrice() {
+            const type = parseFloat(document.getElementById('calcType').value);
+            const quantity = parseInt(document.getElementById('calcQuantity').value) || 0;
+            const total = type * quantity;
+            document.getElementById('calcTotal').innerText = total.toLocaleString('vi-VN') + 'đ';
+        }
+
+        function applyCalculation() {
+            const total = document.getElementById('calcTotal').innerText;
+            document.getElementById('total_price').value = total.replace(/[^0-9]/g, '');
+            document.getElementById('order-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
         document.getElementById('total_price').addEventListener('input', function(e) {
-            const price = e.target.value;
+            const price = parseInt(e.target.value) || 0;
             const alert = document.getElementById('gift-alert');
             if (price >= 100000) {
                 alert.classList.remove('hidden');
@@ -168,5 +320,6 @@
             }
         });
     </script>
+
 </body>
 </html>
