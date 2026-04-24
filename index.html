@@ -6,6 +6,7 @@
     <title>Khương Duy | Tiền Lưu Niệm Tổ 2</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { 
             font-family: 'Be Vietnam Pro', sans-serif; 
@@ -27,10 +28,69 @@
         }
         .promo-gradient { background: linear-gradient(135deg, #ff416c, #ff4b2b); }
         @keyframes pulse-red { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+        @keyframes slide-in { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         .animate-pulse-red { animation: pulse-red 2s infinite; }
+        .animate-slide-in { animation: slide-in 0.5s ease-out; }
+        .animate-fade-in { animation: fade-in 0.8s ease-out; }
+        .animate-bounce { animation: bounce 2s infinite; }
         input, textarea, select { color: white !important; }
         input::placeholder, textarea::placeholder { color: rgba(255, 255, 255, 0.4) !important; }
         select option { background: #1f2937; color: white; }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center; }
+        .modal.active { display: flex; }
+        .modal-content { background: linear-gradient(135deg, #1a1f3a, #2d1f4a); border-radius: 2xl; max-width: 600px; max-height: 90vh; overflow-y: auto; padding: 2rem; animation: slide-in 0.3s ease-out; }
+        .gallery-item { aspect-ratio: 1; overflow: hidden; border-radius: xl; cursor: pointer; transition: all 0.3s ease; }
+        .gallery-item:hover { transform: scale(1.05); }
+        .badge { display: inline-block; padding: 0.5rem 1rem; border-radius: 999px; font-size: 0.75rem; font-weight: bold; }
+        .badge-hot { background: #fbbf24; color: black; }
+        .badge-vip { background: #a855f7; color: white; }
+        .badge-new { background: #ef4444; color: white; }
+        .floating-button { 
+            position: fixed; 
+            bottom: 30px; 
+            right: 30px; 
+            width: 60px; 
+            height: 60px; 
+            border-radius: 50%; 
+            background: linear-gradient(135deg, #fbbf24, #f59e0b); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer; 
+            z-index: 100;
+            box-shadow: 0 10px 25px rgba(251, 191, 36, 0.4);
+            animation: bounce 2s infinite;
+        }
+        .notification { 
+            position: fixed; 
+            top: 100px; 
+            right: 20px; 
+            background: rgba(34, 197, 94, 0.95); 
+            color: white; 
+            padding: 1rem 1.5rem; 
+            border-radius: xl; 
+            z-index: 1001;
+            animation: slide-in 0.3s ease-out;
+        }
+        .stars-rating { display: flex; gap: 5px; font-size: 1.5rem; cursor: pointer; }
+        .stars-rating span { transition: all 0.2s; }
+        .stars-rating span:hover { transform: scale(1.2); }
+        .countdown { font-weight: black; color: #fbbf24; }
+        .tab-button { 
+            padding: 0.75rem 1.5rem; 
+            border-bottom: 3px solid transparent; 
+            cursor: pointer; 
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        .tab-button.active { 
+            border-bottom-color: #fbbf24; 
+            color: #fbbf24;
+        }
+        .hidden-content { display: none; }
+        .hidden-content.active { display: block; }
     </style>
 </head>
 <body>
@@ -40,12 +100,13 @@
         <p class="text-sm md:text-base font-black uppercase tracking-tighter">
             🎉 30/04 - 01/05: GIẢM <span class="text-yellow-300">20.000đ</span> | ĐƠN ≥100K TẶNG <span class="underline">ULTRA BUNDLE 99K</span> 🚀
         </p>
+        <p class="text-xs mt-1 text-yellow-100">⏰ Còn: <span class="countdown" id="countdown">--:--:--</span></p>
     </div>
 
     <div class="max-w-6xl mx-auto px-4 py-12">
 
         <!-- HEADER -->
-        <header class="text-center mb-16">
+        <header class="text-center mb-16 animate-fade-in">
             <div class="inline-block px-6 py-2 rounded-full border border-yellow-500/50 text-yellow-500 text-xs font-bold mb-6 uppercase tracking-widest">
                 ★ Khuong Duy Official - Tổ 2 ★
             </div>
@@ -56,10 +117,24 @@
                 Sắc nét • Rực rỡ • Giao tận bàn tại <span class="text-yellow-400 font-bold">Tổ 2</span>
                 <br><span class="text-gray-400">Bạn thích ai, Duy in người đó! 😎</span>
             </p>
+            <div class="flex justify-center gap-3 flex-wrap">
+                <button onclick="scrollToSection('gallery')" class="px-6 py-2 bg-yellow-500 text-black rounded-full font-bold hover:bg-yellow-400 text-sm">🖼️ Xem Mẫu</button>
+                <button onclick="scrollToSection('order-section')" class="px-6 py-2 bg-purple-600 text-white rounded-full font-bold hover:bg-purple-500 text-sm">📦 Đặt Ngay</button>
+                <button onclick="openChat()" class="px-6 py-2 bg-blue-600 text-white rounded-full font-bold hover:bg-blue-500 text-sm">💬 Chat</button>
+            </div>
         </header>
 
+        <!-- TABS NAVIGATION -->
+        <div class="flex gap-2 mb-12 border-b border-white/10 overflow-x-auto pb-2">
+            <button class="tab-button active" onclick="switchTab('pricing')">📋 Bảng Giá</button>
+            <button class="tab-button" onclick="switchTab('bundles')">🎁 Bundle</button>
+            <button class="tab-button" onclick="switchTab('gallery')">🖼️ Gallery</button>
+            <button class="tab-button" onclick="switchTab('reviews')">⭐ Đánh Giá</button>
+            <button class="tab-button" onclick="switchTab('faq')">❓ FAQ</button>
+        </div>
+
         <!-- PRICING TABLE -->
-        <section class="mb-20">
+        <section id="pricing-tab" class="hidden-content active mb-20">
             <h2 class="text-4xl font-black mb-10 text-center uppercase italic gold-glow">📋 Bảng Giá Lẻ</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="card-glass p-8 rounded-3xl border-l-4 border-yellow-500">
@@ -67,6 +142,7 @@
                     <p class="text-gray-400 text-sm mb-4">Trắng đen, giấy dày cứng</p>
                     <p class="text-4xl font-black text-yellow-500">5.000đ</p>
                     <p class="text-xs text-gray-500 mt-2">/ 1 tờ</p>
+                    <button onclick="addToCart('Normal Print', 5000)" class="w-full mt-4 py-2 bg-yellow-500/20 text-yellow-400 rounded-lg hover:bg-yellow-500/40 text-sm font-bold">+ Thêm</button>
                 </div>
 
                 <div class="card-glass p-8 rounded-3xl border-l-4 border-purple-500">
@@ -74,6 +150,7 @@
                     <p class="text-gray-400 text-sm mb-4">In màu siêu sắc nét</p>
                     <p class="text-4xl font-black text-purple-400">10.000đ</p>
                     <p class="text-xs text-gray-500 mt-2">/ 1 tờ</p>
+                    <button onclick="addToCart('Luxury Color', 10000)" class="w-full mt-4 py-2 bg-purple-500/20 text-purple-400 rounded-lg hover:bg-purple-500/40 text-sm font-bold">+ Thêm</button>
                 </div>
 
                 <div class="card-glass p-8 rounded-3xl border-l-4 border-blue-500">
@@ -81,91 +158,240 @@
                     <p class="text-gray-400 text-sm mb-4">File 4K gửi qua Zalo</p>
                     <p class="text-4xl font-black text-blue-400">5.000đ</p>
                     <p class="text-xs text-gray-500 mt-2">/ 1 file</p>
+                    <button onclick="addToCart('Digital File', 5000)" class="w-full mt-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/40 text-sm font-bold">+ Thêm</button>
                 </div>
             </div>
         </section>
 
         <!-- BUNDLES -->
-        <section class="mb-20">
+        <section id="bundles-tab" class="hidden-content mb-20">
             <h2 class="text-4xl font-black mb-10 text-center uppercase italic gold-glow">🎁 Bundle & Combo</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 
-                <div class="card-glass p-6 rounded-3xl border-t-4 border-yellow-500">
+                <div class="card-glass p-6 rounded-3xl border-t-4 border-yellow-500 animate-slide-in" style="animation-delay: 0.1s">
                     <div class="flex justify-between items-start mb-4">
                         <h3 class="font-black text-xl text-yellow-500">MEGA BUNDLE</h3>
-                        <span class="bg-yellow-500 text-black text-xs font-black px-2 py-1 rounded">HOT</span>
+                        <span class="badge badge-hot">HOT</span>
                     </div>
                     <p class="text-gray-300 text-sm mb-4">Full bộ 6 mệnh giá (In màu toàn bộ)</p>
                     <div class="flex gap-2 mb-6">
                         <span class="text-2xl font-black text-yellow-400">45.000đ</span>
                         <span class="text-sm text-gray-500 line-through">60k</span>
                     </div>
-                    <button onclick="selectBundle('MEGA BUNDLE - 45.000đ')" class="w-full py-3 bg-yellow-500 text-black rounded-xl font-black hover:bg-yellow-400 uppercase text-sm">Chọn</button>
+                    <button onclick="selectBundle('MEGA BUNDLE - 45.000đ')" class="w-full py-3 bg-yellow-500 text-black rounded-xl font-black hover:bg-yellow-400 uppercase text-sm transition">Chọn</button>
                 </div>
 
-                <div class="card-glass p-6 rounded-3xl border-t-4 border-purple-600">
+                <div class="card-glass p-6 rounded-3xl border-t-4 border-purple-600 animate-slide-in" style="animation-delay: 0.2s">
                     <div class="flex justify-between items-start mb-4">
                         <h3 class="font-black text-xl text-purple-400">ULTRA BUNDLE</h3>
-                        <span class="bg-purple-600 text-white text-xs font-black px-2 py-1 rounded">VIP</span>
+                        <span class="badge badge-vip">VIP</span>
                     </div>
                     <p class="text-gray-300 text-sm mb-4">Tất cả nhân vật + File Digital + Quà tặng</p>
                     <div class="flex gap-2 mb-6">
                         <span class="text-2xl font-black text-purple-400">99.000đ</span>
                         <span class="text-sm text-gray-500 line-through">150k</span>
                     </div>
-                    <button onclick="selectBundle('ULTRA BUNDLE - 99.000đ')" class="w-full py-3 bg-purple-600 text-white rounded-xl font-black hover:bg-purple-500 uppercase text-sm">Chọn</button>
+                    <button onclick="selectBundle('ULTRA BUNDLE - 99.000đ')" class="w-full py-3 bg-purple-600 text-white rounded-xl font-black hover:bg-purple-500 uppercase text-sm transition">Chọn</button>
                 </div>
 
-                <div class="card-glass p-6 rounded-3xl border-t-4 border-blue-500">
+                <div class="card-glass p-6 rounded-3xl border-t-4 border-blue-500 animate-slide-in" style="animation-delay: 0.3s">
                     <div class="flex justify-between items-start mb-4">
                         <h3 class="font-black text-xl text-blue-400">FRIENDSHIP PACK</h3>
-                        <span class="bg-blue-500 text-white text-xs font-black px-2 py-1 rounded">5+1</span>
+                        <span class="badge badge-new">5+1</span>
                     </div>
                     <p class="text-gray-300 text-sm mb-4">Mua 5 tờ tặng 1 miễn phí</p>
                     <div class="flex gap-2 mb-6">
                         <span class="text-2xl font-black text-blue-400">Giá lẻ</span>
                         <span class="text-sm text-green-400 font-bold">-20%</span>
                     </div>
-                    <button onclick="selectBundle('FRIENDSHIP PACK')" class="w-full py-3 bg-blue-600 text-white rounded-xl font-black hover:bg-blue-500 uppercase text-sm">Chọn</button>
+                    <button onclick="selectBundle('FRIENDSHIP PACK')" class="w-full py-3 bg-blue-600 text-white rounded-xl font-black hover:bg-blue-500 uppercase text-sm transition">Chọn</button>
                 </div>
 
-                <div class="card-glass p-6 rounded-3xl border-t-4 border-green-500">
+                <div class="card-glass p-6 rounded-3xl border-t-4 border-green-500 animate-slide-in" style="animation-delay: 0.4s">
                     <div class="flex justify-between items-start mb-4">
                         <h3 class="font-black text-xl text-green-400">PRESIDENT SET</h3>
-                        <span class="bg-green-500 text-white text-xs font-black px-2 py-1 rounded">LIMITED</span>
+                        <span class="badge badge-new">LIMITED</span>
                     </div>
                     <p class="text-gray-300 text-sm mb-4">4 vị tổng thống quyền lực (In màu)</p>
                     <div class="flex gap-2 mb-6">
                         <span class="text-2xl font-black text-green-400">35.000đ</span>
                         <span class="text-sm text-gray-500 line-through">40k</span>
                     </div>
-                    <button onclick="selectBundle('PRESIDENT SET - 35.000đ')" class="w-full py-3 bg-green-600 text-white rounded-xl font-black hover:bg-green-500 uppercase text-sm">Chọn</button>
+                    <button onclick="selectBundle('PRESIDENT SET - 35.000đ')" class="w-full py-3 bg-green-600 text-white rounded-xl font-black hover:bg-green-500 uppercase text-sm transition">Chọn</button>
                 </div>
 
-                <div class="card-glass p-6 rounded-3xl border-t-4 border-red-500">
+                <div class="card-glass p-6 rounded-3xl border-t-4 border-red-500 animate-slide-in" style="animation-delay: 0.5s">
                     <div class="flex justify-between items-start mb-4">
                         <h3 class="font-black text-xl text-red-400">STARTER KIT</h3>
-                        <span class="bg-red-500 text-white text-xs font-black px-2 py-1 rounded">MỚI</span>
+                        <span class="badge badge-new">MỚI</span>
                     </div>
                     <p class="text-gray-300 text-sm mb-4">3 tờ Normal tùy chọn</p>
                     <div class="flex gap-2 mb-6">
                         <span class="text-2xl font-black text-red-400">12.000đ</span>
                         <span class="text-sm text-gray-500 line-through">15k</span>
                     </div>
-                    <button onclick="selectBundle('STARTER KIT - 12.000đ')" class="w-full py-3 bg-red-600 text-white rounded-xl font-black hover:bg-red-500 uppercase text-sm">Chọn</button>
+                    <button onclick="selectBundle('STARTER KIT - 12.000đ')" class="w-full py-3 bg-red-600 text-white rounded-xl font-black hover:bg-red-500 uppercase text-sm transition">Chọn</button>
                 </div>
 
-                <div class="card-glass p-6 rounded-3xl border-t-4 border-pink-500">
+                <div class="card-glass p-6 rounded-3xl border-t-4 border-pink-500 animate-slide-in" style="animation-delay: 0.6s">
                     <div class="flex justify-between items-start mb-4">
                         <h3 class="font-black text-xl text-pink-400">PREMIUM COLLECTION</h3>
-                        <span class="bg-pink-500 text-white text-xs font-black px-2 py-1 rounded">✨</span>
+                        <span class="badge badge-vip">✨</span>
                     </div>
                     <p class="text-gray-300 text-sm mb-4">Mix Normal + Luxury + Digital</p>
                     <div class="flex gap-2 mb-6">
                         <span class="text-2xl font-black text-pink-400">120.000đ</span>
                         <span class="text-sm text-gray-500 line-through">180k</span>
                     </div>
-                    <button onclick="selectBundle('PREMIUM COLLECTION - 120.000đ')" class="w-full py-3 bg-pink-600 text-white rounded-xl font-black hover:bg-pink-500 uppercase text-sm">Chọn</button>
+                    <button onclick="selectBundle('PREMIUM COLLECTION - 120.000đ')" class="w-full py-3 bg-pink-600 text-white rounded-xl font-black hover:bg-pink-500 uppercase text-sm transition">Chọn</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- GALLERY -->
+        <section id="gallery-tab" class="hidden-content mb-20">
+            <h2 class="text-4xl font-black mb-10 text-center uppercase italic gold-glow" id="gallery">🖼️ Gallery Mẫu In</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div class="gallery-item bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center text-3xl font-black" onclick="openGalleryModal('Mẫu 1: In Tổng Thống')">👨‍💼</div>
+                <div class="gallery-item bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-3xl font-black" onclick="openGalleryModal('Mẫu 2: In Sao Kpop')">✨</div>
+                <div class="gallery-item bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-3xl font-black" onclick="openGalleryModal('Mẫu 3: In Anime')">🎨</div>
+                <div class="gallery-item bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center text-3xl font-black" onclick="openGalleryModal('Mẫu 4: In Nhân Vật')">🎭</div>
+                <div class="gallery-item bg-gradient-to-br from-red-500 to-rose-500 flex items-center justify-center text-3xl font-black" onclick="openGalleryModal('Mẫu 5: In Custom')">❤️</div>
+                <div class="gallery-item bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center text-3xl font-black" onclick="openGalleryModal('Mẫu 6: In Special')">💫</div>
+                <div class="gallery-item bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center text-3xl font-black" onclick="openGalleryModal('Mẫu 7: In Luxury')">🏆</div>
+                <div class="gallery-item bg-gradient-to-br from-slate-500 to-slate-700 flex items-center justify-center text-3xl font-black" onclick="openGalleryModal('Mẫu 8: In Digital')">📱</div>
+            </div>
+        </section>
+
+        <!-- REVIEWS -->
+        <section id="reviews-tab" class="hidden-content mb-20">
+            <h2 class="text-4xl font-black mb-10 text-center uppercase italic gold-glow">⭐ Đánh Giá Từ Khách</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="card-glass p-6 rounded-3xl">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <p class="font-black text-lg">Duy Hưng</p>
+                            <p class="text-xs text-gray-400">Tổ 1</p>
+                        </div>
+                        <div class="stars-rating">
+                            <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 text-sm">In siêu đẹp, sắc nét lắm! Duy giỏi quá, còn giao tận bàn nữa 😍</p>
+                </div>
+
+                <div class="card-glass p-6 rounded-3xl">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <p class="font-black text-lg">Hiển Vinh</p>
+                            <p class="text-xs text-gray-400">Tổ 2</p>
+                        </div>
+                        <div class="stars-rating">
+                            <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 text-sm">Bundle 99k thực sự rất đáng giá! Được nhiều mẫu, giao nhanh lắm 🎁</p>
+                </div>
+
+                <div class="card-glass p-6 rounded-3xl">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <p class="font-black text-lg">Phúc Lâm</p>
+                            <p class="text-xs text-gray-400">Tổ 3</p>
+                        </div>
+                        <div class="stars-rating">
+                            <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 text-sm">Chất lượng tốt, giá hợp lí. Mình đã mua nhiều lần rồi 👍</p>
+                </div>
+
+                <div class="card-glass p-6 rounded-3xl">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <p class="font-black text-lg">Trọng Quang</p>
+                            <p class="text-xs text-gray-400">Tổ 4</p>
+                        </div>
+                        <div class="stars-rating">
+                            <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 text-sm">Rất hài lòng! Chỉ mong Duy in thêm nhiều mẫu nữa thôi 💕</p>
+                </div>
+
+                <div class="card-glass p-6 rounded-3xl">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <p class="font-black text-lg">Gia Bảo</p>
+                            <p class="text-xs text-gray-400">7A12</p>
+                        </div>
+                        <div class="stars-rating">
+                            <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 text-sm">Duy là xứ sở mơ ước của mình 😂 In đẹp, giao nhanh, giá rẻ!</p>
+                </div>
+
+                <div class="card-glass p-6 rounded-3xl">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <p class="font-black text-lg">Bảo Nguyên</p>
+                            <p class="text-xs text-gray-400">7A15</p>
+                        </div>
+                        <div class="stars-rating">
+                            <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 text-sm">Mua khuôn luôn! Có promo hay lắm, vừa rẻ vừa xinh 🔥</p>
+                </div>
+            </div>
+            <div class="mt-10 text-center">
+                <button onclick="openReviewForm()" class="px-8 py-3 bg-yellow-500 text-black rounded-full font-bold hover:bg-yellow-400 text-sm uppercase">✍️ Viết Đánh Giá</button>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq-tab" class="hidden-content mb-20">
+            <h2 class="text-4xl font-black mb-10 text-center uppercase italic gold-glow">❓ Câu Hỏi Thường Gặp</h2>
+            <div class="max-w-2xl mx-auto space-y-4">
+                <div class="card-glass p-6 rounded-2xl cursor-pointer" onclick="toggleFaq(this)">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-black text-lg">❓ Làm sao để đặt hàng?</h3>
+                        <span class="text-2xl">+</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mt-3 hidden">Bạn chỉ cần tìm Duy tại bàn Tổ 2, nói nội dung in là được. Hoặc điền form bên dưới để nhanh hơn!</p>
+                </div>
+
+                <div class="card-glass p-6 rounded-2xl cursor-pointer" onclick="toggleFaq(this)">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-black text-lg">⏱️ Bao lâu thì giao hàng?</h3>
+                        <span class="text-2xl">+</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mt-3 hidden">Thường 1-2 tiết học là xong. Nếu gấp có thể giao trong tiết học đó!</p>
+                </div>
+
+                <div class="card-glass p-6 rounded-2xl cursor-pointer" onclick="toggleFaq(this)">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-black text-lg">💳 Cách thanh toán như nào?</h3>
+                        <span class="text-2xl">+</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mt-3 hidden">Thanh toán tiền mặt hoặc chuyển khoản. Cũng có thể ghi nợ một lúc rồi tính sau!</p>
+                </div>
+
+                <div class="card-glass p-6 rounded-2xl cursor-pointer" onclick="toggleFaq(this)">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-black text-lg">🎨 Có thể in design của mình không?</h3>
+                        <span class="text-2xl">+</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mt-3 hidden">Được! Bạn gửi ảnh/design, Duy sẽ in cho. Nếu cần chỉnh sửa cũng được!</p>
+                </div>
+
+                <div class="card-glass p-6 rounded-2xl cursor-pointer" onclick="toggleFaq(this)">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-black text-lg">❌ Bị lỗi thì sao?</h3>
+                        <span class="text-2xl">+</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mt-3 hidden">Yên tâm! Nếu có lỗi về chất lượng, Duy sẽ in lại miễn phí 100%!</p>
                 </div>
             </div>
         </section>
@@ -175,22 +401,22 @@
             <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-3xl p-10 text-black shadow-2xl">
                 <h2 class="text-3xl font-black mb-6 uppercase">⚡ Ưu Đãi Đặc Biệt Tại Tổ 2</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 font-bold text-sm">
-                    <div class="flex items-center gap-3 bg-black/10 p-4 rounded-xl">
+                    <div class="flex items-center gap-3 bg-black/10 p-4 rounded-xl hover:bg-black/20 transition">
                         <span class="text-2xl">✨</span> Mua 10 tặng 2 (Normal Print)
                     </div>
-                    <div class="flex items-center gap-3 bg-black/10 p-4 rounded-xl">
+                    <div class="flex items-center gap-3 bg-black/10 p-4 rounded-xl hover:bg-black/20 transition">
                         <span class="text-2xl">👥</span> Giảm 10% khi mua nhóm 3+ người
                     </div>
-                    <div class="flex items-center gap-3 bg-black/10 p-4 rounded-xl">
+                    <div class="flex items-center gap-3 bg-black/10 p-4 rounded-xl hover:bg-black/20 transition">
                         <span class="text-2xl">🎁</span> Mua ≥50K → Free ép Plastic
                     </div>
-                    <div class="flex items-center gap-3 bg-black/10 p-4 rounded-xl">
+                    <div class="flex items-center gap-3 bg-black/10 p-4 rounded-xl hover:bg-black/20 transition">
                         <span class="text-2xl">⭐</span> Tích điểm: 5 tờ = 1 dấu
                     </div>
-                    <div class="flex items-center gap-3 bg-black/10 p-4 rounded-xl">
+                    <div class="flex items-center gap-3 bg-black/10 p-4 rounded-xl hover:bg-black/20 transition">
                         <span class="text-2xl">🛡️</span> Bảo hành 1 đổi 1 nếu lỗi
                     </div>
-                    <div class="flex items-center gap-3 bg-black/10 p-4 rounded-xl">
+                    <div class="flex items-center gap-3 bg-black/10 p-4 rounded-xl hover:bg-black/20 transition">
                         <span class="text-2xl">🚚</span> Giao tận bàn - Không phí VN
                     </div>
                 </div>
@@ -284,19 +510,116 @@
             <div class="bg-white text-black px-8 py-4 rounded-full font-black text-xl mb-6 inline-block">
                 📍 ĐỊA ĐIỂM: BÀN TỔ 2
             </div>
+            <div class="flex justify-center gap-6 mb-6 text-2xl">
+                <span class="cursor-pointer hover:scale-125 transition" onclick="alert('Zalo: 0123456789')">💬</span>
+                <span class="cursor-pointer hover:scale-125 transition" onclick="alert('Facebook: Khương Duy')">👤</span>
+                <span class="cursor-pointer hover:scale-125 transition" onclick="alert('Instagram: @khuongduy_prints')">📸</span>
+            </div>
             <p class="text-gray-500 text-xs uppercase tracking-widest">© 2026 KHUONG DUY - ALL RIGHTS RESERVED</p>
             <p class="text-gray-600 text-xs mt-2">Sản phẩm chỉ có giá trị giải trí & sưu tầm • Cấm dùng đóng tiền học</p>
         </footer>
 
     </div>
 
+    <!-- MODALS -->
+    <div id="galleryModal" class="modal" onclick="if(event.target === this) closeModal()">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h2 id="galleryTitle" class="text-2xl font-black"></h2>
+                <button onclick="closeModal()" class="text-3xl font-black text-gray-400 hover:text-white">×</button>
+            </div>
+            <div class="bg-gradient-to-br from-purple-500 to-pink-500 w-full h-64 rounded-2xl mb-4 flex items-center justify-center text-6xl font-black">
+                🖼️
+            </div>
+            <p class="text-gray-300 mb-4">Đây là một mẫu in đẹp từ Duy. Bạn muốn in mẫu này không?</p>
+            <button onclick="selectFromGallery()" class="w-full py-3 bg-yellow-500 text-black rounded-xl font-bold hover:bg-yellow-400 uppercase">Chọn Mẫu Này</button>
+        </div>
+    </div>
+
+    <div id="reviewModal" class="modal" onclick="if(event.target === this) closeReviewModal()">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-black">✍️ Viết Đánh Giá</h2>
+                <button onclick="closeReviewModal()" class="text-3xl font-black text-gray-400 hover:text-white">×</button>
+            </div>
+            <form class="space-y-4" onsubmit="submitReview(event)">
+                <input type="text" placeholder="Tên của bạn" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-yellow-500 outline-none">
+                <input type="text" placeholder="Lớp" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-yellow-500 outline-none">
+                <div>
+                    <p class="text-sm text-gray-400 mb-2">Đánh giá</p>
+                    <div class="stars-rating" id="ratingStars">
+                        <span onclick="setRating(1)">☆</span>
+                        <span onclick="setRating(2)">☆</span>
+                        <span onclick="setRating(3)">☆</span>
+                        <span onclick="setRating(4)">☆</span>
+                        <span onclick="setRating(5)">☆</span>
+                    </div>
+                </div>
+                <textarea placeholder="Nhận xét của bạn..." rows="3" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-yellow-500 outline-none"></textarea>
+                <button type="submit" class="w-full py-3 bg-yellow-500 text-black rounded-xl font-bold hover:bg-yellow-400 uppercase">Gửi Đánh Giá</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="chatModal" class="modal" onclick="if(event.target === this) closeChat()">
+        <div class="modal-content max-w-md">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-black">💬 Chat Với Duy</h2>
+                <button onclick="closeChat()" class="text-3xl font-black text-gray-400 hover:text-white">×</button>
+            </div>
+            <div id="chatBox" class="bg-white/5 rounded-xl h-64 overflow-y-auto mb-4 p-4 space-y-3">
+                <div class="bg-white/10 p-3 rounded-lg text-sm">Xin chào! 👋 Mình là Duy. Bạn muốn in gì hôm nay?</div>
+            </div>
+            <div class="flex gap-2">
+                <input type="text" id="chatInput" placeholder="Nhập tin nhắn..." class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2 focus:border-yellow-500 outline-none text-sm">
+                <button onclick="sendMessage()" class="px-4 py-2 bg-yellow-500 text-black rounded-xl font-bold hover:bg-yellow-400">Gửi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FLOATING BUTTON -->
+    <div class="floating-button" onclick="scrollToSection('order-section')" title="Đặt hàng ngay">
+        <span class="text-3xl">🛒</span>
+    </div>
+
     <script>
+        // COUNTDOWN TIMER
+        function updateCountdown() {
+            const targetDate = new Date('2026-05-02').getTime();
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('countdown').textContent = 
+                    `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // TAB SWITCHING
+        function switchTab(tab) {
+            document.querySelectorAll('.hidden-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(tab + '-tab').classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // BUNDLE SELECTION
         function selectBundle(name) {
             document.getElementById('order_content').value = name;
             document.getElementById('order-section').scrollIntoView({ behavior: 'smooth' });
             document.getElementById('order_content').focus();
+            showNotification('✅ Bundle đã thêm vào form!');
         }
 
+        // CALCULATE PRICE
         function calculatePrice() {
             const type = parseFloat(document.getElementById('calcType').value);
             const quantity = parseInt(document.getElementById('calcQuantity').value) || 0;
@@ -308,8 +631,10 @@
             const total = document.getElementById('calcTotal').innerText;
             document.getElementById('total_price').value = total.replace(/[^0-9]/g, '');
             document.getElementById('order-section').scrollIntoView({ behavior: 'smooth' });
+            showNotification('✅ Giá đã được cập nhật!');
         }
 
+        // GIFT ALERT
         document.getElementById('total_price').addEventListener('input', function(e) {
             const price = parseInt(e.target.value) || 0;
             const alert = document.getElementById('gift-alert');
@@ -319,6 +644,91 @@
                 alert.classList.add('hidden');
             }
         });
+
+        // CART SYSTEM
+        function addToCart(product, price) {
+            document.getElementById('order_content').value = (document.getElementById('order_content').value ? document.getElementById('order_content').value + ' + ' : '') + product;
+            let currentTotal = parseInt(document.getElementById('total_price').value) || 0;
+            document.getElementById('total_price').value = currentTotal + price;
+            showNotification(`✅ Đã thêm ${product}!`);
+        }
+
+        // SCROLL TO SECTION
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // MODALS
+        function openGalleryModal(title) {
+            document.getElementById('galleryTitle').textContent = title;
+            document.getElementById('galleryModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('galleryModal').classList.remove('active');
+        }
+
+        function selectFromGallery() {
+            const title = document.getElementById('galleryTitle').textContent;
+            selectBundle(title);
+            closeModal();
+        }
+
+        function openReviewForm() {
+            document.getElementById('reviewModal').classList.add('active');
+        }
+
+        function closeReviewModal() {
+            document.getElementById('reviewModal').classList.remove('active');
+        }
+
+        function submitReview(e) {
+            e.preventDefault();
+            closeReviewModal();
+            showNotification('✅ Cảm ơn đánh giá của bạn!');
+        }
+
+        function setRating(rating) {
+            const stars = document.querySelectorAll('#ratingStars span');
+            stars.forEach((star, i) => {
+                star.textContent = i < rating ? '★' : '☆';
+            });
+        }
+
+        function openChat() {
+            document.getElementById('chatModal').classList.add('active');
+        }
+
+        function closeChat() {
+            document.getElementById('chatModal').classList.remove('active');
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (message) {
+                const chatBox = document.getElementById('chatBox');
+                chatBox.innerHTML += `<div class="bg-yellow-500/20 p-3 rounded-lg text-sm text-right">Bạn: ${message}</div>`;
+                chatBox.innerHTML += `<div class="bg-white/10 p-3 rounded-lg text-sm">Duy: Cảm ơn bạn! 😊 Mau ghi danh lên nhé!</div>`;
+                input.value = '';
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        }
+
+        // TOGGLE FAQ
+        function toggleFaq(element) {
+            element.querySelector('p').classList.toggle('hidden');
+            element.querySelector('span').textContent = element.querySelector('p').classList.contains('hidden') ? '+' : '−';
+        }
+
+        // NOTIFICATION
+        function showNotification(message) {
+            const notif = document.createElement('div');
+            notif.className = 'notification';
+            notif.textContent = message;
+            document.body.appendChild(notif);
+            setTimeout(() => notif.remove(), 3000);
+        }
     </script>
 
 </body>
